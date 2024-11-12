@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Chat Room</title>
+</head>
+
+<body>
+  <h1>WebSocket Chat Room</h1>
+  <textarea id="chatLog" rows="10" cols="50" readonly></textarea><br>
+  <input id="messageInput" type="text" placeholder="Type a message" />
+  <button onclick="sendMessage()">Send</button>
+
+  <script>
+    const ws = new WebSocket("ws://localhost:8000/ws/chat");
+    ws.onmessage = (event) => {
+      document.getElementById("chatLog").value += event.data + "\n";
+    };
+
+    function sendMessage() {
+      const input = document.getElementById("messageInput");
+      ws.send(input.value);
+      input.value = '';
+    }
+  </script>
+</body>
+
+</html>
